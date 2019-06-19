@@ -82,3 +82,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+.vscode
+package-lock.json
+*.code-workspace
