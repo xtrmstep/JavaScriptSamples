@@ -15,7 +15,7 @@ Collection.prototype = {
     },
 
     append: function (value) {
-        if (value.constructor.name === 'Collection') {
+        if (value instanceof Collection) {
             this.innerCollection = this.innerCollection.concat(value.values());
         } else {
             this.innerCollection.push(value);
