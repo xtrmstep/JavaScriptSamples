@@ -2,6 +2,7 @@
  * @param {Function[]} operations
  * @param {Function} callback
  */
+// solution with callbacks
 module.exports = function (operations, callback) {
 
     let results = new Array(operations.length);
@@ -13,11 +14,11 @@ module.exports = function (operations, callback) {
         return function internalNext(err, res) {
             executions++;
             if (!err)
-                results[idx]= res;
+                results[idx] = res;
             else
                 if (!globalError)
                     globalError = err;
-    
+
             if (executions === operations.length) {
                 if (globalError)
                     callback(globalError);
@@ -26,6 +27,8 @@ module.exports = function (operations, callback) {
             }
         }
     }
-
-    operations.forEach((o, i) => o(nextClosure(i)));
+    if (operations.length > 0)
+        operations.forEach((o, i) => o(nextClosure(i)));
+    else
+        callback(null, []);
 };
