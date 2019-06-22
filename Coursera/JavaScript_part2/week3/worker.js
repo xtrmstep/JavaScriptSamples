@@ -4,12 +4,20 @@ parallel(
     [
         function (next) {
             setTimeout(function(){
-                next(null, '1');
+                next(null, '3');
+            }, 200);
+        },
+        
+        function (next) {
+            setTimeout(function(){
+                next(null, '2');
             }, 100);
         },
         
         function (next) {
-            next(null, '2');
+            setTimeout(function(){
+                next(null, '1');
+            }, 0);
         }
     ],
     
