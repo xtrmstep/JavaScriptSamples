@@ -2,11 +2,19 @@ var parallel = require('./index.js');
 
 parallel(
     [
-        function (next) { /* асинхронная операция 1 */ },
-        function (next) { /* асинхронная операция 2 */ },
-        // ...
+        function (next) {
+            setTimeout(function(){
+                next(null, '1');
+            }, 100);
+        },
+        
+        function (next) {
+            next(null, '2');
+        }
     ],
-    function(err, result) {
-        // обработка результата выполнения операций
+    
+    function (errors, result) {
+        console.error(errors);
+        console.log(result);
     }
-)
+);
