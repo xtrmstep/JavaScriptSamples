@@ -4,25 +4,28 @@
  */
 module.exports = function (operations, callback) {
 
-    var results = [];
-    var globalError = null;
-    var executions = 0;
+    let results = new Array(operations.length);
+    let globalError = null;
+    let executions = 0;
 
-    function internalNext(err, res) {
-        executions++;
-        if (!err)
-            results.push(res);
-        else
-            if (!globalError)
-                globalError = err;
-
-        if (executions === operations.length) {
-            if (globalError)
-                callback(globalError);
+    function nextClosure(operationIndex) {
+        let idx = operationIndex;
+        return function internalNext(err, res) {
+            executions++;
+            if (!err)
+                results[idx]= res;
             else
-                callback(null, results);
+                if (!globalError)
+                    globalError = err;
+    
+            if (executions === operations.length) {
+                if (globalError)
+                    callback(globalError);
+                else
+                    callback(null, results);
+            }
         }
     }
 
-    operations.forEach(o => o(internalNext));
+    operations.forEach((o, i) => o(nextClosure(i)));
 };
