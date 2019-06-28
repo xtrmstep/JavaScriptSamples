@@ -77,32 +77,18 @@ var validateForm = (function () {
         var formElem = document.querySelector("#" + args.formId);
         var btnSave = formElem.querySelector("button");
 
-        // validation --
-        // on blur inputs        
-        // on submit form
-
-        // remove error class from inputs on focus
-
-        // submit --
+        var styles = {
+            formId: args.formId,
+            formValidClass: args.formValidClass,
+            formInvalidClass: args.formInvalidClass,
+            inputErrorClass: args.inputErrorClass
+        };
         var onSubmit = function (evt) {
-            evt.preventDefault();
-
-            var styles = {
-                formId: args.formId,
-                formValidClass: args.formValidClass,
-                formInvalidClass: args.formInvalidClass,
-                inputErrorClass: args.inputErrorClass
-            };
+            evt.preventDefault();            
             handlerFormSubmit(styles);
         };
 
-        var onBlur = function (evt) {
-            var styles = {
-                formId: args.formId,
-                formValidClass: args.formValidClass,
-                formInvalidClass: args.formInvalidClass,
-                inputErrorClass: args.inputErrorClass
-            };
+        var onBlur = function (evt) {            
             if (evt.target.tagName === 'INPUT') {
                 validateInput(evt.target, styles);
             }
