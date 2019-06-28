@@ -3,13 +3,30 @@
 // Код валидации формы
 var validateForm = (function () {
 
-    function getValidator(validatorType, dataSet) {
+    function getValidator(validatorType, settings) {
+        var isMandatory = Object.keys(settings).indexOf('required') >= 0;
         switch (validatorType) {
             case 'letters':
                 return function (text) {
-                    var regex1 = /[A-Za-zА-Яа-я]+/;
-                    var match = regex1.exec(text);
+                    if (isMandatory && text == '') return false;
+                    var regex = /[A-Za-zА-Яа-я]+/;
+                    var match = regex.exec(text);
                     return match == text; // if same, then it's only required text
+                };
+            case 'number':
+                return function (text) {
+                    if (isMandatory && text == '') return false;
+                    var min = settings.validatorMin ? parseFloat(settings.validatorMin) : -Infinity;
+                    var max = settings.validatorMax ? parseFloat(settings.validatorMax) : Infinity;
+                    var value = parseFloat(text);
+                    return (min <= value) && (value <= max);
+                };
+            case 'regexp':
+                return function (text) {
+                    if (isMandatory && text == '') return false;
+                    var regex = new RegExp(settings.validatorPattern);
+                    var match = regex.exec(text);
+                    return match == text;
                 };
             default:
                 return function () {
