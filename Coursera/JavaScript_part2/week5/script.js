@@ -57,8 +57,10 @@ var validateForm = (function () {
         var hasError = false;
 
         formInputs.forEach(input => {
-            if (!hasError) {
-                hasError = !validateInput(input, styles);
+            var isInputNotValid = !validateInput(input, styles);
+            // save error flag for form
+            if (!hasError && isInputNotValid) {
+                hasError = isInputNotValid;
             }
         });
 
