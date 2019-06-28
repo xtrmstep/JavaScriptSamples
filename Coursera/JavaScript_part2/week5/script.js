@@ -16,7 +16,7 @@ var validateForm = (function () {
             case 'number':
                 return function (text) {
                     if (isMandatory && text == '') return false;
-                    
+
                     var regex = /^[+-]?\d+([\.\,]\d+)?$/;
                     if (!text.match(regex)) return false;
 
@@ -95,8 +95,14 @@ var validateForm = (function () {
         };
 
         var onBlur = function (evt) {
+            var styles = {
+                formId: args.formId,
+                formValidClass: args.formValidClass,
+                formInvalidClass: args.formInvalidClass,
+                inputErrorClass: args.inputErrorClass
+            };
             if (evt.target.tagName === 'INPUT') {
-                validateInput(evt.target);
+                validateInput(evt.target, styles);
             }
         };
 
@@ -108,7 +114,7 @@ var validateForm = (function () {
 
         btnSave.addEventListener('click', onSubmit);
         formElem.addEventListener('submit', onSubmit);
-        formElem.addEventListener('blur', onBlur);
+        formElem.addEventListener('blur', onBlur, true);
         formElem.addEventListener('focus', onFocus);
 
     };
