@@ -16,6 +16,10 @@ var validateForm = (function () {
             case 'number':
                 return function (text) {
                     if (isMandatory && text == '') return false;
+                    
+                    var regex = /^[+-]?\d+([\.\,]\d+)?$/;
+                    if (!text.match(regex)) return false;
+
                     var min = settings.validatorMin ? parseFloat(settings.validatorMin) : -Infinity;
                     var max = settings.validatorMax ? parseFloat(settings.validatorMax) : Infinity;
                     var value = parseFloat(text);
