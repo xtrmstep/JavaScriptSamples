@@ -9,13 +9,16 @@ var validateForm = (function () {
             case 'letters':
                 return function (text) {
                     if (isMandatory && text == '') return false;
+                    if (text === '') return true;
+                    
                     var regex = /[A-Za-zА-Яа-я]+/;
                     var match = regex.exec(text);
                     return match == text; // if same, then it's only required text
                 };
             case 'number':
                 return function (text) {
-                    if (isMandatory && text == '') return false;
+                    if (isMandatory && text === '') return false;
+                    if (text === '') return true;
 
                     var regex = /^[+-]?\d+([\.\,]\d+)?$/;
                     if (!text.match(regex)) return false;
@@ -28,6 +31,8 @@ var validateForm = (function () {
             case 'regexp':
                 return function (text) {
                     if (isMandatory && text == '') return false;
+                    if (text === '') return true;
+
                     var regex = new RegExp(settings.validatorPattern);
                     var match = regex.exec(text);
                     return match == text;
@@ -84,11 +89,11 @@ var validateForm = (function () {
             inputErrorClass: args.inputErrorClass
         };
         var onSubmit = function (evt) {
-            evt.preventDefault();            
+            evt.preventDefault();
             handlerFormSubmit(styles);
         };
 
-        var onBlur = function (evt) {            
+        var onBlur = function (evt) {
             if (evt.target.tagName === 'INPUT') {
                 validateInput(evt.target, styles);
             }
