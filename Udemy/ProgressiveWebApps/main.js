@@ -1,7 +1,7 @@
 (function () {
 
-    if (navigator.seviceWorker){
-        navigator.seviceWorker.register("/sw.js")
+    if (navigator.serviceWorker){
+        navigator.serviceWorker.register("/sw.js")
         .then(function(registered){
             console.log("registered");
         })
