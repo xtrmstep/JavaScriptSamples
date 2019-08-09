@@ -21,5 +21,5 @@
             .catch(function (error) {
                 console.error(error);
             });
-    }, 11000);
+    }, 5000);
 })();
