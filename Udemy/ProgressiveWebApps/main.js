@@ -22,4 +22,10 @@
                 console.error(error);
             });
     }, 5000);
+
+    Notification.requestPermission(perm => {
+        console.log(perm);
+    });
+
+    new Notification("My Notificatin");
 })();
