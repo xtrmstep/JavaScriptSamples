@@ -30,4 +30,19 @@ self.addEventListener('fetch', (e) => {
     // e.respondWith(new Response("{text:'No way!'}"));
 });
 
+self.addEventListener('push', (e) => {
+    console.log('in push handler');
+    console.log(e);
+});
+
+// handle messages 
+self.addEventListener('message', (e) => {
+    console.log('in message');
+    console.log(e);
+    self.clients.matchAll().then((clients)=>{
+        console.log(clients);
+    });
+    
+});
+
 console.log("sw registered");

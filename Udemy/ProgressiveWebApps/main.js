@@ -2,10 +2,11 @@
 
     if (navigator.serviceWorker) {
         navigator.serviceWorker.register("/sw.js")
-            .then(function (registered) {
+            .then((registered) => {
                 console.log("registered");
+                registered.active.postMessage('Message TO SW');
             })
-            .catch(function () {
+            .catch(() => {
                 console.log("error");
             });
     } else {
@@ -27,5 +28,6 @@
         console.log(perm);
     });
 
-    new Notification("My Notificatin");
+    let n = new Notification("My Notificatin");
+    n.onclick = () => { console.log("clicked in notification!"); };
 })();
